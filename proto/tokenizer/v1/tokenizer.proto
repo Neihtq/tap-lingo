@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "github.com/neihtq/tap-lingo/gen/go/tokenizer/v1";
+
 package tokenizer.v1;
 
 service TokenizerService {

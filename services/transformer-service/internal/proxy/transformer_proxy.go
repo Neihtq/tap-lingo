@@ -5,36 +5,60 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/neihtq/tap-lingo/gen/go/proto/transformer/v1"
+	pbTransformer "github.com/neihtq/tap-lingo/gen/go/proto/transformer/v1"
 	"github.com/neihtq/tap-lingo/internal/transformer"
+
+	pbTokenizer "github.com/neihtq/tap-lingo/gen/go/tokenizer/v1"
 )
 
 type ProxyServer interface {
-	Transform(ctx context.Context, req *pb.TransformRequest) (*pb.TransformResponse, error)
+	Transform(ctx context.Context, req *pbTransformer.TransformRequest) (*pbTransformer.TransformResponse, error)
 }
 
 type TransformerProxy struct {
-	pb.UnimplementedTransformerServiceServer
+	pbTransformer.UnimplementedTransformerServiceServer
 
-	Transformer transformer.Transformer
+	Transformer            transformer.Transformer
+	TokenizerServiceClient pbTokenizer.TokenizerServiceClient
 }
 
-func (s *TransformerProxy) Transform(ctx context.Context, req *pb.TransformRequest) (*pb.TransformResponse, error) {
+func (tp *TransformerProxy) Transform(ctx context.Context, req *pbTransformer.TransformRequest) (*pbTransformer.TransformResponse, error) {
 	url := req.GetUrl()
-	transformResult := s.Transformer.TransformArticle(url)
+	transformResult := tp.Transformer.TransformArticle(url)
 	if transformResult.Result == transformer.Fail {
 		fmt.Println("[WARN] Cannot transform %s", url)
 	}
 
-	nGrams := []string{"a", "b", "c"}
-	response := &pb.TransformResponse{
+	tokenizerRequest := pbTokenizer.TokenizeRequest{Text: transformResult.PlainText}
+	res, err := tp.TokenizerServiceClient.Tokenize(ctx, &tokenizerRequest)
+	if err != nil {
+		fmt.Println("[ERROR] TokenizerServicer returned error %v", err)
+		return &pbTransformer.TransformResponse{
+			Title:       transformResult.Title,
+			Byline:      transformResult.Byline,
+			ImageUrl:    transformResult.ImageURL,
+			HtmlContent: transformResult.HTML,
+			PlaintText:  transformResult.PlainText,
+		}, nil
+
+	}
+
+	tokens := make([]*pbTransformer.Token, len(res.Tokens))
+	for i, t := range res.Tokens {
+		tokens[i] = &pbTransformer.Token{
+			Token: t.Token,
+			Start: t.Start,
+			End:   t.End,
+		}
+	}
+
+	response := &pbTransformer.TransformResponse{
 		Title:       transformResult.Title,
 		Byline:      transformResult.Byline,
 		ImageUrl:    transformResult.ImageURL,
 		HtmlContent: transformResult.HTML,
 		PlaintText:  transformResult.PlainText,
-		NGrams:      nGrams,
+		Tokens:      tokens,
 	}
-
 	return response, nil
 }

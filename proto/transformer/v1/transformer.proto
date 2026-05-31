@@ -18,5 +18,11 @@ message TransformResponse {
   string imageUrl = 3;
   string htmlContent = 4;
   string plaintText = 5;
-  repeated string nGrams = 6;
+  repeated Token tokens = 6;
+}
+
+message Token {
+  string token = 1;
+  int32 start = 2;
+  int32 end = 3;
 }
