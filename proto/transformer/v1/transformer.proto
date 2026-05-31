@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/neihtq/tap-lingo/gen/go/transformer/v1";
+
+service TransformerService {
+  rpc Transform(TransformRequest) returns (TransformResponse);
+}
+
+package transformer.v1;
+
+message TransformRequest {
+  string url = 1;
+}
+
+message TransformResponse {
+  string content = 1;
+  repeated string nGrams = 2;
+}
