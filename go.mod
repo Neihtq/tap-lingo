@@ -4,6 +4,7 @@ go 1.26.1
 
 require (
 	codeberg.org/readeck/go-readability/v2 v2.1.1
+	github.com/hashicorp/golang-lru/v2 v2.0.7
 	google.golang.org/grpc v1.81.1
 	google.golang.org/protobuf v1.36.11
 )

@@ -9,17 +9,21 @@ import (
 	"github.com/neihtq/tap-lingo/services/transformer-service/internal/transformer"
 )
 
-type Server struct {
+type ProxyServer interface {
+	Transform(ctx context.Context, req *pb.TransformRequest) (*pb.TransformResponse, error)
+}
+
+type TransformerProxy struct {
 	pb.UnimplementedTransformerServiceServer
 
 	Transformer transformer.Transformer
 }
 
-func (s *Server) Transform(ctx context.Context, req *pb.TransformRequest) (*pb.TransformResponse, error) {
+func (s *TransformerProxy) Transform(ctx context.Context, req *pb.TransformRequest) (*pb.TransformResponse, error) {
 	url := req.GetUrl()
-	transformResult, _ := s.Transformer.TransformArticle(url)
+	transformResult := s.Transformer.TransformArticle(url)
 	if transformResult.Result == transformer.Fail {
-		fmt.Println("[WARN] Could not transform %s", url)
+		fmt.Println("[WARN] Cannot transform %s", url)
 	}
 
 	nGrams := []string{"a", "b", "c"}

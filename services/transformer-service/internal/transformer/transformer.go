@@ -6,6 +6,7 @@ import (
 	"time"
 
 	readability "codeberg.org/readeck/go-readability/v2"
+	"github.com/hashicorp/golang-lru/v2/expirable"
 )
 
 type Result string
@@ -25,10 +26,18 @@ type TransformResult struct {
 }
 
 type Transformer interface {
-	TransformArticle(url string) (TransformResult, error)
+	TransformArticle(url string) TransformResult
 }
 
-type ArticleTransformer struct{}
+type ArticleTransformer struct {
+	Cache *expirable.LRU[string, string]
+}
+
+func NewArticleTransformer() *ArticleTransformer {
+	return &ArticleTransformer{
+		Cache: expirable.NewLRU[string, string](5, nil, time.Minute*10),
+	}
+}
 
 func (a *ArticleTransformer) TransformArticle(url string) TransformResult {
 	article, err := readability.FromURL(url, 30*time.Second)
