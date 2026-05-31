@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package tokenizer.v1;
+
+service TokenizerService {
+  rpc Tokenize(TokenizeRequest) returns (TokenizeResponse);
+}
+
+
+message TokenizeRequest {
+  string text = 1;
+}
+
+message TokenizeResponse {
+  repeated Token tokens = 1;
+}
+
+message Token {
+  string token = 1;
+  int32 start = 2;
+  int32 end = 3;
+}
