@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/neihtq/tap-lingo/gen/go/transformer/v1";
+option go_package = "github.com/neihtq/tap-lingo/services/transformer-service/gen/go/transformer/v1";
 
 service TransformerService {
   rpc Transform(TransformRequest) returns (TransformResponse);
