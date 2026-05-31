@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	pb "github.com/neihtq/tap-lingo/gen/go/proto/transformer/v1"
-	"github.com/neihtq/tap-lingo/services/transformer-service/internal/transformer"
+	"github.com/neihtq/tap-lingo/internal/transformer"
 )
 
 type ProxyServer interface {
