@@ -30,5 +30,5 @@ func TestTransform(t *testing.T) {
 	if err != nil {
 		t.Errorf("transform return failure: %v", err)
 	}
-	log.Printf("Response: %s", res.GetContent())
+	log.Printf("Response: %s", res.GetTitle())
 }

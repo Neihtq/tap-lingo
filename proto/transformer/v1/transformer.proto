@@ -13,6 +13,10 @@ message TransformRequest {
 }
 
 message TransformResponse {
-  string content = 1;
-  repeated string nGrams = 2;
+  string title = 1;
+  string byline = 2;
+  string imageUrl = 3;
+  string htmlContent = 4;
+  string plaintText = 5;
+  repeated string nGrams = 6;
 }

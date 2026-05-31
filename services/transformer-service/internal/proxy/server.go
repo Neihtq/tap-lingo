@@ -6,21 +6,30 @@ import (
 	"fmt"
 
 	pb "github.com/neihtq/tap-lingo/gen/go/proto/transformer/v1"
+	"github.com/neihtq/tap-lingo/services/transformer-service/internal/transformer"
 )
 
 type Server struct {
 	pb.UnimplementedTransformerServiceServer
+
+	Transformer transformer.Transformer
 }
 
 func (s *Server) Transform(ctx context.Context, req *pb.TransformRequest) (*pb.TransformResponse, error) {
 	url := req.GetUrl()
-	fmt.Println(url)
+	transformResult, _ := s.Transformer.TransformArticle(url)
+	if transformResult.Result == transformer.Fail {
+		fmt.Println("[WARN] Could not transform %s", url)
+	}
 
-	content := "SomeContent"
 	nGrams := []string{"a", "b", "c"}
 	response := &pb.TransformResponse{
-		Content: content,
-		NGrams:  nGrams,
+		Title:       transformResult.Title,
+		Byline:      transformResult.Byline,
+		ImageUrl:    transformResult.ImageURL,
+		HtmlContent: transformResult.HTML,
+		PlaintText:  transformResult.PlainText,
+		NGrams:      nGrams,
 	}
 
 	return response, nil
