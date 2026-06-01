@@ -30,19 +30,26 @@ type Transformer interface {
 }
 
 type ArticleTransformer struct {
-	Cache *expirable.LRU[string, string]
+	Cache *expirable.LRU[string, readability.Article]
 }
 
 func NewArticleTransformer() *ArticleTransformer {
 	return &ArticleTransformer{
-		Cache: expirable.NewLRU[string, string](5, nil, time.Minute*10),
+		Cache: expirable.NewLRU[string, readability.Article](5, nil, time.Minute*10),
 	}
 }
 
 func (a *ArticleTransformer) TransformArticle(url string) TransformResult {
-	article, err := readability.FromURL(url, 30*time.Second)
-	if err != nil {
-		return TransformResult{Result: Fail}
+	var article readability.Article
+	if val, ok := a.Cache.Get(url); ok {
+		article = val
+	} else {
+		readable, err := readability.FromURL(url, 30*time.Second)
+		if err != nil {
+			return TransformResult{Result: Fail}
+		}
+		article = readable
+		a.Cache.Add(url, article)
 	}
 
 	var htmlBuf, textBuf bytes.Buffer

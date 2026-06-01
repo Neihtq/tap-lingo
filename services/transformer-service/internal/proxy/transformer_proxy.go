@@ -26,13 +26,13 @@ func (tp *TransformerProxy) Transform(ctx context.Context, req *pbTransformer.Tr
 	url := req.GetUrl()
 	transformResult := tp.Transformer.TransformArticle(url)
 	if transformResult.Result == transformer.Fail {
-		fmt.Println("[WARN] Cannot transform %s", url)
+		fmt.Printf("[WARN] Cannot transform %s \n", url)
 	}
 
 	tokenizerRequest := pbTokenizer.TokenizeRequest{Text: transformResult.PlainText}
 	res, err := tp.TokenizerServiceClient.Tokenize(ctx, &tokenizerRequest)
 	if err != nil {
-		fmt.Println("[ERROR] TokenizerServicer returned error %v", err)
+		fmt.Printf("[ERROR] TokenizerServicer returned error %v \n", err)
 		return &pbTransformer.TransformResponse{
 			Title:       transformResult.Title,
 			Byline:      transformResult.Byline,
