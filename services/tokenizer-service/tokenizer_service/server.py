@@ -14,7 +14,7 @@ PORT = os.getenv("TOKENIZER_PORT", "50051")
 
 
 class TokenizerService(tokenizer_pb2_grpc.TokenizerServiceServicer):
-    def Tokenize(self, request: tokenizer_pb2.TokenizeRequest, context):
+    def tokenize(self, request: tokenizer_pb2.TokenizeRequest, context):
         tokenized = tokenize(request.text)
         tokens = []
         start = 0

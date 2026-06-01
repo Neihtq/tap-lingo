@@ -2,3 +2,5 @@ bin/
 gen/
 coverage.out
 **/gen/
+**/__pycache__/
+**/.coverage
