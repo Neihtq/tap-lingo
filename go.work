@@ -1,7 +1,7 @@
 go 1.26.1
 
 use (
-	./services/api-gateway
-	./services/transformer-service
+	./services/gateway
+	./services/transformer
 	./tests
 )
