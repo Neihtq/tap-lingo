@@ -4,7 +4,7 @@ option go_package = "github.com/neihtq/tap-lingo/gen/go/tokenizer/v1";
 
 package tokenizer.v1;
 
-service TokenizerService {
+service Tokenizer {
   rpc Tokenize(TokenizeRequest) returns (TokenizeResponse);
 }
 

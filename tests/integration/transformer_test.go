@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	pb "github.com/neihtq/tap-lingo/gen/go/proto/transformer/v1"
+	pb "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
