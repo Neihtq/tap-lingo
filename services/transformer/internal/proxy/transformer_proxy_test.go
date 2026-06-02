@@ -32,7 +32,7 @@ func (m *mockTokenizerClient) Tokenize(ctx context.Context, in *pbTokenizer.Toke
 func TestTransform(t *testing.T) {
 	ctx := context.Background()
 
-	t.Run("Successful Transformation and Teoknization", func(t *testing.T) {
+	t.Run("Successful Transformation and Tokenization", func(t *testing.T) {
 		mockTransformer := &mockTransformer{
 			onTransformArticle: func(url string) transformer.TransformResult {
 				return transformer.TransformResult{
