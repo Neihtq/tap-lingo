@@ -5,10 +5,10 @@ import (
 	"context"
 	"fmt"
 
-	pbTransformer "github.com/neihtq/tap-lingo/gen/go/proto/transformer/v1"
-	"github.com/neihtq/tap-lingo/internal/transformer"
+	pbTransformer "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
+	"github.com/neihtq/tap-lingo/transformer/internal/transformer"
 
-	pbTokenizer "github.com/neihtq/tap-lingo/gen/go/tokenizer/v1"
+	pbTokenizer "github.com/neihtq/tap-lingo/transformer/gen/go/tokenizer/v1"
 )
 
 type ProxyServer interface {

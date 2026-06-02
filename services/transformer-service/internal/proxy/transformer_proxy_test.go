@@ -5,11 +5,11 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/neihtq/tap-lingo/internal/transformer"
+	"github.com/neihtq/tap-lingo/transformer/internal/transformer"
 	"google.golang.org/grpc"
 
-	pbTransformer "github.com/neihtq/tap-lingo/gen/go/proto/transformer/v1"
-	pbTokenizer "github.com/neihtq/tap-lingo/gen/go/tokenizer/v1"
+	pbTransformer "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
+	pbTokenizer "github.com/neihtq/tap-lingo/transformer/gen/go/tokenizer/v1"
 )
 
 type mockTransformer struct {

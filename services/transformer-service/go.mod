@@ -1,4 +1,4 @@
-module github.com/neihtq/tap-lingo
+module github.com/neihtq/tap-lingo/transformer
 
 go 1.26.1
 
