@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	pb "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
+	pbTransformer "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -20,12 +20,12 @@ func TestTransform(t *testing.T) {
 		t.Errorf("fail to connect: %v", err)
 	}
 	defer conn.Close()
-	client := pb.NewTransformerServiceClient(conn)
+	client := pbTransformer.NewTransformerServiceClient(conn)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	request := pb.TransformRequest{Url: url}
+	request := pbTransformer.TransformRequest{Url: url}
 	res, err := client.Transform(ctx, &request)
 	if err != nil {
 		t.Errorf("transform return failure: %v", err)
