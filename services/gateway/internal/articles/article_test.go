@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	pbTransformer "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
+	pbTransformer "github.com/neihtq/tap-lingo/clients/transformer/proto/transformer/v1"
 	"google.golang.org/grpc"
 )
 
