@@ -1,8 +1,8 @@
 go 1.26.1
 
 use (
+	./clients/go
 	./services/gateway
 	./services/transformer
 	./tests
-	./clients/go
 )
