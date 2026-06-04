@@ -5,10 +5,10 @@ import (
 	"context"
 	"fmt"
 
-	pbTransformer "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
+	pbTransformer "github.com/neihtq/tap-lingo/clients/transformer/proto/transformer/v1"
 	"github.com/neihtq/tap-lingo/transformer/internal/transformer"
 
-	pbTokenizer "github.com/neihtq/tap-lingo/transformer/gen/go/tokenizer/v1"
+	pbTokenizer "github.com/neihtq/tap-lingo/clients/tokenizer/gen/go/tokenizer/v1"
 )
 
 type ProxyServer interface {
@@ -19,7 +19,7 @@ type TransformerProxy struct {
 	pbTransformer.UnimplementedTransformerServiceServer
 
 	Transformer            transformer.Transformer
-	TokenizerServiceClient pbTokenizer.TokenizerServiceClient
+	TokenizerServiceClient pbTokenizer.TokenizerClient
 }
 
 func (tp *TransformerProxy) Transform(ctx context.Context, req *pbTransformer.TransformRequest) (*pbTransformer.TransformResponse, error) {

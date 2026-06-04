@@ -8,8 +8,8 @@ import (
 	"github.com/neihtq/tap-lingo/transformer/internal/transformer"
 	"google.golang.org/grpc"
 
-	pbTransformer "github.com/neihtq/tap-lingo/transformer/gen/go/proto/transformer/v1"
-	pbTokenizer "github.com/neihtq/tap-lingo/transformer/gen/go/tokenizer/v1"
+	pbTokenizer "github.com/neihtq/tap-lingo/clients/tokenizer/gen/go/tokenizer/v1"
+	pbTransformer "github.com/neihtq/tap-lingo/clients/transformer/proto/transformer/v1"
 )
 
 type mockTransformer struct {
@@ -21,7 +21,7 @@ func (m *mockTransformer) TransformArticle(url string) transformer.TransformResu
 }
 
 type mockTokenizerClient struct {
-	pbTokenizer.TokenizerServiceClient
+	pbTokenizer.TokenizerClient
 	onTokenize func(ctx context.Context, in *pbTokenizer.TokenizeRequest) (*pbTokenizer.TokenizeResponse, error)
 }
 
